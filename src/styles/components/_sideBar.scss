@@ -1,0 +1,48 @@
+@use "../abstracts/variables" as *;
+
+.sidebar {
+    position: relative;
+    background-color: $color-secondary;
+    color: $color-bg;
+    width: 114px;
+    height: 100%;
+    padding: $space-6 $space-4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $space-4;
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+        gap: $space-5;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: $radius-md;
+        background-color: $color-bg;
+        color: $color-secondary;
+        width: 64px;
+        height: 64px;
+        font-weight: 700;
+    }
+
+    .copiryght {
+    color: $color-bg;
+        display: inline-block;      
+    transform: rotate(-90deg);    
+    transform-origin: center; 
+    font-size: $text-xs;
+        position: absolute;
+        left: 50%;
+        bottom: 100px;
+        transform: translateX(-50%) rotate(-90deg);
+        transform-origin: center;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,45 @@
+@use "../abstracts/variables" as *;
+
+// Carte d'information (Calories, Protéines, etc.)
+.infoCard {
+	display: flex;
+	align-items: center;
+	gap: $space-6;
+	background: $color-surface;
+	border-radius: $radius-lg;
+	padding: 28px 32px;
+	min-height: 124px;
+
+	&__icon {
+		width: 64px;
+		height: 64px;
+		border-radius: $radius-sm;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+
+		img { width: 32px; height: 32px; object-fit: contain; }
+	}
+
+	&__texts { display: flex; flex-direction: column; }
+
+	&__value {
+		font-size: 20px;
+		font-weight: 700;
+		color: $color-contrast;
+		line-height: 1.2;
+	}
+
+	&__label {
+		margin-top: $space-1;
+		font-size: 14px;
+		color: $color-muted;
+	}
+}
+
+// Variantes couleurs rapides (utiliser className="infoCard infoCard--red")
+.infoCard--red .infoCard__icon { background: rgba($primary-500, 0.1); }
+.infoCard--blue .infoCard__icon { background: rgba($accent-blue, 0.1); }
+.infoCard--yellow .infoCard__icon { background: rgba($accent-yellow, 0.1); }
+.infoCard--pink .infoCard__icon { background: rgba($accent-pink, 0.1); }

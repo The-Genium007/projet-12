@@ -1,0 +1,56 @@
+@use "../abstracts/variables" as *;
+
+/* Layout plein écran pour la page utilisateur */
+
+.container {
+	display: flex;
+	padding: $space-8;
+	gap: $space-8;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+/* Colonne principale (charts) */
+.container > div:first-child {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: $space-8;
+	min-width: 0; /* évite overflow horizontal */
+}
+
+/* Ligne inférieure des 3 petits graphiques */
+.bottom-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: $space-6;
+	flex: 1;
+	min-height: 250px;
+}
+
+/* Chaque carte graphique occupe totalement sa cellule */
+.bottom-container .areaChartCard,
+.bottom-container .radarChartCard,
+.bottom-container .radialScoreCard {
+	width: 100%;
+	height: 100%;
+}
+
+/* Colonne d'infos (cartes nutritionnelles) */
+.container-info {
+	width: 260px;
+	display: flex;
+	flex-direction: column;
+	gap: $space-8;
+	overflow-y: auto;
+}
+
+/* Centrage vertical automatique du contenu principal si wrapper .app-content */
+.app-content {
+	margin: auto $space-12;
+}
+
+.title {
+	margin: 0 $space-8;
+	.firstName { color: $color-primary; }
+}

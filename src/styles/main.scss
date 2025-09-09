@@ -1,0 +1,37 @@
+// Architecture SCSS principale
+// Export des variables pour d'autres bundles éventuels
+@forward "./abstracts/variables";
+
+// Import local des variables et des partiels
+@use "./abstracts/variables" as *;
+
+// Base
+@use "./base/reset";
+@use "./base/typography";
+
+// Layout/components/pages/hooks
+@use "./components/menu";
+@use "./components/sideBar";
+@use "./components/cardInfo";
+@use "./pages/error";
+@use "./pages/user";
+@use "./components/chart";
+@use "./components/area";
+@use "./components/radar";
+@use "./components/radial";
+
+// Layout principal: sidebar à gauche, contenu à droite
+.app-layout {
+	display: grid;
+	grid-template-columns: 114px 1fr; // aligné avec .sidebar width
+	align-items: stretch;
+	min-height: calc(100dvh - 72px); // hauteur moins le header approximatif
+}
+
+.app-content {
+	padding: $space-6;
+}
+
+
+
+

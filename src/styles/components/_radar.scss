@@ -1,0 +1,32 @@
+@use "../abstracts/variables" as *;
+
+// Styles du radar (performance)
+.radarChartCard {
+	background: $color-contrast; // ton gris très sombre
+	border-radius: $radius-lg;
+	width: 260px;
+	height: 260px;
+	position: relative;
+	padding: 0;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.recharts-polar-grid { 
+		polygon { stroke: $color-white; stroke-opacity: 1; }
+		line { stroke: rgba($color-white, 0.15); }
+	}
+
+	.recharts-polar-angle-axis-tick text { 
+		fill: $color-white; 
+	}
+
+	// Adoucir le polygone de la série
+	.recharts-radar-polygon { 
+		stroke-width: 1.5px; 
+	}
+}
+
+// Option: gérer taille responsive dans un parent grid si besoin
+.radarChartCard.small { height: 200px; }
