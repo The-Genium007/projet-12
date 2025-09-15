@@ -7,11 +7,12 @@ import CardInfo from "../components/CardInfo";
 import { colors } from "../styles/theme";
 import { useLoaderData } from "react-router-dom";
 import { useUserBundle } from "../data/Fetch";
+import { config } from "../config";
 
 
 function User() {
   const { userId } = useLoaderData();
-  const { data, loading } = useUserBundle("http://localhost:3000", userId);
+  const { data, loading } = useUserBundle(config.apiBaseUrl, userId);
 
   if (loading) return <p>Chargement…</p>;
   if (!data) return <p>Erreur : données introuvables</p>;

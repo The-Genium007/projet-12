@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { config } from "../config";
+import { getMockBundle, hasMock } from "./mockData";
 
 export function useUserBundle(baseUrl, userId) {
   const [bundle, setBundle] = useState(null);
@@ -16,6 +18,12 @@ export function useUserBundle(baseUrl, userId) {
       setLoading(true);
       setError(null);
       try {
+        // En mode mock, on court-circuite les appels réseau
+        if (config.useMock && hasMock(userId)) {
+          const mock = getMockBundle(userId);
+          setBundle(mock);
+          return;
+        }
         // Récupération des 4 endpoints (séquentiel = plus simple à lire)
         const userRes = await fetch(`${baseUrl}/user/${userId}`);
         const userJson = await userRes.json();
@@ -82,8 +90,13 @@ export async function userLoader({ params }) {
     throw new Response("Missing user id", { status: 400 });
   }
   // Vérifie l'existence de l'utilisateur côté API, sinon déclenche la route d'erreur
-  const API_URL = "http://localhost:3000";
+  const API_URL = config.apiBaseUrl || "http://localhost:3000";
   try {
+    // En mode mock, valide simplement l'existence du bundle
+    if (config.useMock) {
+      if (hasMock(id)) return { userId: id };
+      throw new Response("Utilisateur introuvable", { status: 404 });
+    }
     const res = await fetch(`${API_URL}/user/${id}`);
     if (!res.ok) {
       const status = res.status === 404 ? 404 : 500;
