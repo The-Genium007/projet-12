@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { config } from "../config";
 import { getMockBundle, hasMock } from "./mockData";
+import { UserBundle } from "./models";
 
 export function useUserBundle(baseUrl, userId) {
   const [bundle, setBundle] = useState(null);
@@ -21,7 +22,7 @@ export function useUserBundle(baseUrl, userId) {
         // En mode mock, on court-circuite les appels réseau
         if (config.useMock && hasMock(userId)) {
           const mock = getMockBundle(userId);
-          setBundle(mock);
+          setBundle(new UserBundle(mock));
           return;
         }
         // Récupération des 4 endpoints (séquentiel = plus simple à lire)
@@ -39,38 +40,14 @@ export function useUserBundle(baseUrl, userId) {
         const perfRes = await fetch(`${baseUrl}/user/${userId}/performance`);
         const perfJson = await perfRes.json();
 
-        const u = userJson.data;
-        const mapped = {
-          user: {
-            id: u?.id,
-            firstName: u?.userInfos?.firstName,
-            lastName: u?.userInfos?.lastName,
-            age: u?.userInfos?.age,
-            score: u?.score || u?.todayScore || 0,
-            keyData: u?.keyData || {},
-          },
-          activity: activityJson?.data?.sessions
-            ? activityJson.data.sessions.map((s) => ({
-                day: s.day,
-                kilogram: s.kilogram,
-                calories: s.calories,
-              }))
-            : [],
-          sessions: sessionsJson?.data?.sessions
-            ? sessionsJson.data.sessions.map((s) => ({
-                day: s.day,
-                sessionLength: s.sessionLength,
-              }))
-            : [],
-          performance: perfJson?.data?.data
-            ? perfJson.data.data.map((p) => ({
-                kind: perfJson.data.kind?.[p.kind],
-                value: p.value,
-              }))
-            : [],
-        };
+        const model = UserBundle.fromApi(
+          userJson,
+          activityJson,
+          sessionsJson,
+          perfJson
+        );
 
-        setBundle(mapped);
+        setBundle(model);
       } catch (e) {
         setError(e.message || String(e));
       } finally {

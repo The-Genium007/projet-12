@@ -1,4 +1,4 @@
-const IS_DEV = true;  // true pour activer les données mockées
+const IS_DEV = false;  // true pour activer les données mockées
 
 export const config = {
     useMock: IS_DEV, // bascule automatique
